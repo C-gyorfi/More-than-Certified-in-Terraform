@@ -31,7 +31,7 @@ resource "docker_container" "nodered_container" {
 }
 
 output "IP_address" {
-  value       = join(":", [docker_container.nodered_container[0].ip_address, docker_container.nodered_container[0].ports[0].external])
+  value       = [for i in docker_container.nodered_container[*]: join(":", [i.ip_address], i.ports[*]["external"])]
   description = "the ip address and extrenal port of the container"
 }
 
