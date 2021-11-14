@@ -1,6 +1,5 @@
 variable "ext_port" {
-  type = number
-  default = 1880
+  type = list
 }
 
 variable "int_port" {
@@ -13,7 +12,11 @@ variable "int_port" {
   }
 }
 
-variable "countainer_count" {
-  type = number
-  default = 1
+locals {
+  countainer_count = length(var.ext_port)
 }
+
+# variable "countainer_count" {
+#   type = number
+#   default = 1
+# }
