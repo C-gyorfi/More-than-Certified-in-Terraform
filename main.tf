@@ -10,7 +10,7 @@ terraform {
 provider "docker" {}
 
 resource "docker_image" "nodered_image" {
-  name = "nodered/node-red:latest"
+  name = lookup(var.image, var.env)
 }
 
 resource "random_string" "random" {
