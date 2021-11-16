@@ -1,7 +1,7 @@
 output "IP_address" {
-  value       = [for i in docker_container.nodered_container[*]: join(":", [i.ip_address], i.ports[*]["external"])]
+  value       = [for i in docker_container.nodered_container[*] : join(":", [i.ip_address], i.ports[*]["external"])]
   description = "the ip address and extrenal port of the container"
-  sensitive = true
+  sensitive   = true
 }
 
 output "container_name" {
