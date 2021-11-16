@@ -13,11 +13,16 @@ variable "image" {
 }
 
 variable "ext_port" {
-  type = list
+  type = map
 
   validation {
-    condition = max(var.ext_port...) <= 65535 && min(var.ext_port...) > 1
+    condition = max(var.ext_port["dev"]...) <= 65535 && min(var.ext_port["dev"]...) > 1
     error_message = "The external port must be in the valid port range 0 - 65535."
+  }
+
+  validation {
+    condition = max(var.ext_port["prod"]...) <= 1984 && min(var.ext_port["prod"]...) >= 1980
+    error_message = "The external port must be in the valid port range 1980 - 1984."
   }
 }
 
@@ -32,7 +37,7 @@ variable "int_port" {
 }
 
 locals {
-  countainer_count = length(var.ext_port)
+  countainer_count = length(lookup(var.ext_port, var.env))
 }
 
 # variable "countainer_count" {
