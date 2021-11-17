@@ -32,7 +32,7 @@ variable "int_port" {
 }
 
 locals {
-  countainer_count = length(lookup(var.ext_port, terraform.workspace))
+  countainer_count = length(var.ext_port[terraform.workspace])
 }
 
 # variable "countainer_count" {
