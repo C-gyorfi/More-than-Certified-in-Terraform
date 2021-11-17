@@ -1,8 +1,3 @@
-variable "env" {
-  type    = string
-  default = "dev"
-}
-
 variable "image" {
   type        = map(any)
   description = "image for container"
@@ -37,7 +32,7 @@ variable "int_port" {
 }
 
 locals {
-  countainer_count = length(lookup(var.ext_port, var.env))
+  countainer_count = length(lookup(var.ext_port, terraform.workspace))
 }
 
 # variable "countainer_count" {
