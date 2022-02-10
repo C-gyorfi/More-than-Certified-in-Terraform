@@ -10,12 +10,11 @@ resource "random_string" "random" {
   upper   = false
 }
 
-resource "docker_container" "nodered_container" {
+module "container" {
+  source = "./container"
   count = local.countainer_count
   name  = join("-", ["nodered", terraform.workspace, random_string.random[count.index].result])
   image = module.image.image_out
-  ports {
-    internal = var.int_port
-    external = var.ext_port[terraform.workspace][count.index]
-  }
+  internal_port = var.int_port
+  external_port = var.ext_port[terraform.workspace][count.index]
 }
