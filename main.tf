@@ -11,6 +11,7 @@ resource "random_string" "random" {
 }
 
 module "container" {
+  depends_on = [module.image]
   source = "./container"
   count = local.countainer_count
   name  = join("-", ["nodered", terraform.workspace, random_string.random[count.index].result])
