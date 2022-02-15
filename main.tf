@@ -18,4 +18,5 @@ module "container" {
   image = module.image.image_out
   internal_port = var.int_port
   external_port = var.ext_port[terraform.workspace][count.index]
+  container_path = "/data"
 }
