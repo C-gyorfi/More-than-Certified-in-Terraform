@@ -1,11 +1,7 @@
-module "nodered_image" {
+module "image" { 
   source = "./image"
-  image_in = var.image["nodered"][terraform.workspace]
-}
-
-module "influxdb_image" {
-  source = "./image"
-  image_in = var.image["influxdb"][terraform.workspace]
+  for_each = var.image
+  image_in = each.value[terraform.workspace]
 }
 
 resource "random_string" "random" {
@@ -16,11 +12,11 @@ resource "random_string" "random" {
 }
 
 module "container" {
-  depends_on = [module.nodered_image]
+  depends_on = [module.image]
   source = "./container"
   count = local.countainer_count
   name  = join("-", ["nodered", terraform.workspace, random_string.random[count.index].result])
-  image = module.nodered_image.image_out
+  image = module.image["nodered"].image_out
   internal_port = var.int_port
   external_port = var.ext_port[terraform.workspace][count.index]
   container_path = "/data"

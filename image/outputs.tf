@@ -1,3 +1,3 @@
 output "image_out" {
-  value = var.image_in
+  value = docker_image.container_image.latest
 }
