@@ -17,12 +17,12 @@ variable "ext_port" {
   type = map(any)
 
   validation {
-    condition     = max(var.ext_port["dev"]...) <= 65535 && min(var.ext_port["dev"]...) > 1
+    condition     = max(var.ext_port["nodered"]["dev"]...) <= 65535 && min(var.ext_port["nodered"]["dev"]...) > 1
     error_message = "The external port must be in the valid port range 0 - 65535."
   }
 
   validation {
-    condition     = max(var.ext_port["prod"]...) <= 1984 && min(var.ext_port["prod"]...) >= 1980
+    condition     = max(var.ext_port["nodered"]["prod"]...) <= 1984 && min(var.ext_port["nodered"]["prod"]...) >= 1980
     error_message = "The external port must be in the valid port range 1980 - 1984."
   }
 }
@@ -38,7 +38,7 @@ variable "int_port" {
 }
 
 locals {
-  countainer_count = length(var.ext_port[terraform.workspace])
+  countainer_count = length(var.ext_port["nodered"][terraform.workspace])
 }
 
 # variable "countainer_count" {

@@ -1,3 +1,17 @@
+locals {
+  deployment = {
+    nodered = {
+      int_port = var.int_port
+      ext_port = var.ext_port["nodered"][terraform.workspace]
+      container_path = "/data"
+    }
+    influxdb = {
+      int_port = 8086
+      ext_port = var.ext_port["influxdb"][terraform.workspace]
+      container_path = "/var/lib/influxdb"
+    }
+  }
+}
 module "image" { 
   source = "./image"
   for_each = var.image
@@ -5,7 +19,7 @@ module "image" {
 }
 
 resource "random_string" "random" {
-  count   = local.countainer_count
+  for_each = local.deployment
   length  = 4
   special = false
   upper   = false
@@ -14,10 +28,11 @@ resource "random_string" "random" {
 module "container" {
   depends_on = [module.image]
   source = "./container"
-  count = local.countainer_count
-  name  = join("-", ["nodered", terraform.workspace, random_string.random[count.index].result])
-  image = module.image["nodered"].image_out
-  internal_port = var.int_port
-  external_port = var.ext_port[terraform.workspace][count.index]
-  container_path = "/data"
+  for_each = local.deployment
+  # count = local.countainer_count
+  name  = join("-", [each.key, terraform.workspace, random_string.random[each.key].result])
+  image = module.image[each.key].image_out
+  internal_port = each.value.int_port
+  external_port = each.value.ext_port[0]
+  container_path = each.value.container_path
 }
