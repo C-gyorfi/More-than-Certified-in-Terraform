@@ -36,12 +36,3 @@ variable "int_port" {
     error_message = "The internal port must be in the valid port range 0 - 65535."
   }
 }
-
-locals {
-  countainer_count = length(var.ext_port["nodered"][terraform.workspace])
-}
-
-# variable "countainer_count" {
-#   type = number
-#   default = 1
-# }
