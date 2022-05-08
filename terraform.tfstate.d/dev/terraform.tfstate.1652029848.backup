@@ -1,0 +1,162 @@
+{
+  "version": 4,
+  "terraform_version": "1.1.7",
+  "serial": 558,
+  "lineage": "dc74074f-691c-f6c3-5a14-e99a2f34998b",
+  "outputs": {},
+  "resources": [
+    {
+      "module": "module.container[\"grafana\"]",
+      "mode": "managed",
+      "type": "random_string",
+      "name": "random",
+      "provider": "provider[\"registry.terraform.io/hashicorp/random\"]",
+      "instances": [
+        {
+          "index_key": 0,
+          "schema_version": 1,
+          "attributes": {
+            "id": "sud3",
+            "keepers": null,
+            "length": 4,
+            "lower": true,
+            "min_lower": 0,
+            "min_numeric": 0,
+            "min_special": 0,
+            "min_upper": 0,
+            "number": true,
+            "override_special": null,
+            "result": "sud3",
+            "special": false,
+            "upper": false
+          },
+          "sensitive_attributes": [],
+          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjEifQ==",
+          "dependencies": [
+            "module.image.docker_image.container_image"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.container[\"grafana\"].module.volume[0]",
+      "mode": "managed",
+      "type": "docker_volume",
+      "name": "container_volume",
+      "provider": "provider[\"registry.terraform.io/kreuzwerker/docker\"]",
+      "instances": [
+        {
+          "index_key": 0,
+          "schema_version": 1,
+          "attributes": {
+            "driver": "local",
+            "driver_opts": null,
+            "id": "grafana-dev-sud3-volume",
+            "labels": [],
+            "mountpoint": "/var/lib/docker/volumes/grafana-dev-sud3-volume/_data",
+            "name": "grafana-dev-sud3-volume"
+          },
+          "sensitive_attributes": [],
+          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjEifQ==",
+          "dependencies": [
+            "module.container.random_string.random",
+            "module.image.docker_image.container_image"
+          ]
+        },
+        {
+          "index_key": 1,
+          "schema_version": 1,
+          "attributes": {
+            "driver": "local",
+            "driver_opts": null,
+            "id": "grafana-dev-sud3-volume",
+            "labels": [],
+            "mountpoint": "/var/lib/docker/volumes/grafana-dev-sud3-volume/_data",
+            "name": "grafana-dev-sud3-volume"
+          },
+          "sensitive_attributes": [],
+          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjEifQ==",
+          "dependencies": [
+            "module.container.random_string.random",
+            "module.image.docker_image.container_image"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.image[\"grafana\"]",
+      "mode": "managed",
+      "type": "docker_image",
+      "name": "container_image",
+      "provider": "provider[\"registry.terraform.io/kreuzwerker/docker\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "build": [],
+            "force_remove": null,
+            "id": "sha256:085342b11c1fa517ca5761fe90d2a0e1650b3147ee12db783aa22da752d81b6fgrafana/grafana",
+            "keep_locally": null,
+            "latest": "sha256:085342b11c1fa517ca5761fe90d2a0e1650b3147ee12db783aa22da752d81b6f",
+            "name": "grafana/grafana",
+            "output": null,
+            "pull_trigger": null,
+            "pull_triggers": null
+          },
+          "sensitive_attributes": [],
+          "private": "bnVsbA=="
+        }
+      ]
+    },
+    {
+      "module": "module.image[\"influxdb\"]",
+      "mode": "managed",
+      "type": "docker_image",
+      "name": "container_image",
+      "provider": "provider[\"registry.terraform.io/kreuzwerker/docker\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "build": [],
+            "force_remove": null,
+            "id": "sha256:86516adf96b152e8da1b29827a54930cd58667596bd643cd298e55189c3c131equay.io/influxdb/influxdb:v2.0.2",
+            "keep_locally": null,
+            "latest": "sha256:86516adf96b152e8da1b29827a54930cd58667596bd643cd298e55189c3c131e",
+            "name": "quay.io/influxdb/influxdb:v2.0.2",
+            "output": null,
+            "pull_trigger": null,
+            "pull_triggers": null
+          },
+          "sensitive_attributes": [],
+          "private": "bnVsbA=="
+        }
+      ]
+    },
+    {
+      "module": "module.image[\"nodered\"]",
+      "mode": "managed",
+      "type": "docker_image",
+      "name": "container_image",
+      "provider": "provider[\"registry.terraform.io/kreuzwerker/docker\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "build": [],
+            "force_remove": null,
+            "id": "sha256:91af009300c3dac600686a225a6e14a4fb3946b2397b19a6cd02f7b8686eec49nodered/node-red:latest",
+            "keep_locally": null,
+            "latest": "sha256:91af009300c3dac600686a225a6e14a4fb3946b2397b19a6cd02f7b8686eec49",
+            "name": "nodered/node-red:latest",
+            "output": null,
+            "pull_trigger": null,
+            "pull_triggers": null
+          },
+          "sensitive_attributes": [],
+          "private": "bnVsbA=="
+        }
+      ]
+    }
+  ]
+}
