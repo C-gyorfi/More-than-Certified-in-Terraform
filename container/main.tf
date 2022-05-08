@@ -17,6 +17,16 @@ resource "docker_container" "container" {
     container_path = var.container_path
     volume_name = docker_volume.container_volume[count.index].name
   }
+
+  provisioner "local-exec" {
+    when = create
+    command = "echo ${self.name}:${self.ip_address}:${join("", [for x in self.ports[*]["external"]: x])} >> containers.txt"
+  }
+
+    provisioner "local-exec" {
+    when = destroy
+    command = "rm -rf containers.txt"
+  }
 }
 
 resource "docker_volume" "container_volume" {
@@ -24,5 +34,18 @@ resource "docker_volume" "container_volume" {
   name = "${var.name}-${random_string.random[count.index].result}-volume"
   lifecycle {
     prevent_destroy = false
+  }
+  
+  provisioner "local-exec" {
+    when = destroy
+    command = "mkdir ${path.cwd}/../backup/"
+    on_failure = continue
+  }
+
+  provisioner "local-exec" {
+    when = destroy
+    command = "echo hello"
+    # command = "sudo tar -czvf ${path.cwd}/../backup/${self.name}.tar.gz ${self.mountpoint}/"
+    on_failure = fail
   }
 }
