@@ -12,7 +12,7 @@ variable "image" {
     }
     grafana = {
       dev  = "grafana/grafana"
-      prod  = "grafana/grafana"
+      prod = "grafana/grafana"
     }
   }
 }
